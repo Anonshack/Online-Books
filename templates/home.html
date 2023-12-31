@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<title>Home Page</title>
+<style>
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0px 10px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content p a {
+    color: lime;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 50px;
+}
+
+.dropdown-content p a:hover {
+    background-color: black;
+    border-radius: 20px;
+}
+</style>
+<br><br>
+
+<div class="container">
+    {% if not user.is_authenticated %}
+        <h4><a href="/users/login/" style="color: black;">Login</a> || <a href="/users/register/" style="color: green">Registration</a></h4>
+    {% endif %}
+        <h2><a href="{% url 'all_books' %}" style="color: green">Books List</a></h2>
+        {% if user.is_authenticated %}
+        {% if user.is_superuser %}
+            <div class="dropdown">
+                <span style='color: blue;'>Welcome, Admin</span>
+                <div class="dropdown-content">
+                    <p><a href="/users/logout">Logout</a></p>
+                </div>
+            </div>
+        {% else %}
+            <div class="dropdown">
+                <span style='color: green;'>Welcome, {{ user.username }}</span>
+                <div class="dropdown-content">
+                    <p><a href="/users/logout">Logout</a></p>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID </th>
+                <th>Book name</th>
+                <th>After</th>
+                <th>Created data</th>
+                <th>Info</th>
+                <th>Price</th>
+                <th>Number of views</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in clay %}
+            <tr>
+                <td>{{ i.id }}</td>
+                    <td>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'book_detail' i.id %}">{{ i.title }}</a>
+                        {% else %}
+                            <a href="/users/login/">{{ i.title }}</a>
+                        {% endif %}    
+
+                    </td>
+                <td>{{ i.after }}</td>
+                <td>{{ i.year }}</td>
+                <td>{{ i.info | slice:":36" }}....</td>
+                <td>{{ i.price }}</td>
+                <td>{{ i.number_of_views }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

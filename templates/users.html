@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0px;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.user-icon {
+    margin-right: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #428bca;
+    font-size: 16px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    margin-top: 10px;
+}
+
+</style>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Users List</title>
+    </head>
+    <body>
+    <br><br>
+        <a href="{% url 'home' %}"><h2>Users List</h2></a>
+        <ul>
+            {% for user in users %}
+                {% if user.is_superuser %}
+                    <a href="{% url 'this-user' user.pk %}" class="admin-link">
+                        <li class="admin">Welcome, Admin</li>
+                    </a>
+                {% else %}
+                    {% if user.is_authenticated %}
+                        {% if user == request.user %}
+                            <a href="{% url 'this-user' user.pk %}" class="user-link">
+                                <li class="current-user">{{ user.username }} (Your Todo)</li>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'this-user' user.pk %}" class="user-link">
+                                <li>{{ user.username }}</li>
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <li>{{ user.username }}</li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </body>
+    </html>
+{% endblock %}

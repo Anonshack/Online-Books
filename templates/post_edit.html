@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<title>Post edit</title>
+<style>
+.post-title {
+  color: blue;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.post-form {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+</style>
+<br><br>
+  <h1 class="post-title">Postni Tahrirlash</h1>
+  <form method="post" class="post-form">{% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Yangilash" class="submit-button">
+  </form>
+{% endblock content %}

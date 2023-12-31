@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Shikoyatlar Ro'yxati</h2>
+<ul>
+{% for complaint in complaints %}
+    <li>
+        {{ complaint.text }}
+        <br>
+        <small>Yuborilgan foydalanuvchi: {{ complaint.user.username }}</small>
+        <br>
+        <small>Yuborilgan vaqti: {{ complaint.date_created }}</small>
+        <br>
+        {% if user.is_superuser %}
+            <a href="{% url 'respond_to_complaint' complaint.id %}">Javob yozish</a>
+        {% endif %}
+        {% if complaint.is_resolved %}
+            <p class="response">Superuserdan javob: {{ complaint.response }}</p>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+<br>
+<a href="{% url 'create_complaint' %}">Yangi shikoyat yuborish</a>
+{% endblock %}

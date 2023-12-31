@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="{% url 'users' %}" style="color: green; font-size: 40px">Users</a><br>
+{% if user.is_superuser %}
+      <a href="{% url 'complaints_list' %}" style="color: green; font-size: 40px">Complaints</a><br>
+{% endif %}
+{% endblock %}

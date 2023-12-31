@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% load static %}
+    <a href="{% url 'home' %}"><h2 class="todo-header">Todo List</h2></a>
+<style>
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.todo-header {
+    color: #007bff;
+    text-align: center;
+}
+
+.todo-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.todo-table th, .todo-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.todo-table th {
+    background-color: #f2f2f2;
+}
+
+</style>
+    {% if clay %}
+        <table class="todo-table">
+            <thead>
+                <tr>
+                    <th>Todo title</th>
+                    <th>Description</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Status</th>
+                    <th>Update Todo</th>
+                    <th>Delete Todo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in clay %}
+                    <tr>
+                        <td>{{ todo.title }}</td>
+                        <td>{{ todo.description }}</td>
+                        <td>{{ todo.start_time }}</td>
+                        <td>{{ todo.end_time }}</td>
+                        <td>{{ todo.get_status_display }}</td>
+                        {% if todo.user == request.user %}
+                            <td><a href="{% url 'todo-update' todo.pk %}">Update</a></td>
+                        {% else %}
+                            <td>Permission Denied</td>
+                        {% endif %}
+
+                        {% if todo.user == request.user %}
+                            <td><a href="{% url 'todo-delete' todo.pk %}">Delete</a></td>
+                        {% else %}
+                            <td>Permission Denied</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No todos available.</p>
+    {% endif %}
+{% endblock %}

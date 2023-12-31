@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <title>About Page</title>
+<style>
+    .container {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .about-item {
+        border: 2px solid #ccc;
+        padding: 30px;
+        margin-bottom: 20px;
+        text-align: center; /* Align the content to the center */
+    }
+
+    .about-item img {
+        max-width: 55%;
+        border-radius: 35px;
+        margin-bottom: 10px;
+        height: auto;
+    }
+
+    .about-text {
+        margin: 30px;
+        padding-left: 30px;
+        width: 100%;
+    }
+</style>
+    {% for i in about %}
+        <div class="container">
+            <div class="about-item">
+                <h1>{{ i.title }}</h1>
+                {% if i.image %}
+                    <img src="{{ i.image.url }}" alt="connecting" height="400" class="about-img">
+                {% else %}
+                    <p>No image available</p>
+                {% endif %}
+            </div>
+            <div class="about-text">
+                <span>{{ i.info }}</span>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

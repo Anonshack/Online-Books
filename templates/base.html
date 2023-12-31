@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="text/html" href="https://i.pinimg.com/564x/5a/63/50/5a635014b4b22bc92150fbbf63ecd680.jpg" class="rounded-circle logo border-box"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        .logo {
+            border-radius: 50%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff; /* Navbar brand text color */
+        }
+
+        .navbar-toggler-icon {
+            background-color: #fff; /* Navbar toggler color */
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #fff;
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #ccc;
+        }
+
+        .form-inline .form-control {
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 56px; /* Adjusted for smaller screens */
+            }
+        }
+    </style>
+
+    <title>Online Book</title>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Online Book</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'all_books' %}">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contacts' %}">Contacts</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'add-todo' %}">Todos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users-list' %}">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'password-change' %}">Change Password</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" name="queryset" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    {% if messages %}
+        <div class="alert alert-dismissible" role="alert">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+
+</body>
+</html>

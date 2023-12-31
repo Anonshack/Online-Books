@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    h1 {
+        color: green;
+        font-size: 35px;
+        text-align: center;
+    }
+
+    img.centered-image {
+        display: block;
+        margin: 0 auto;
+        height: 257px;
+    }
+
+    a.telegram-link {
+        display: inline-block;
+        margin-top: 10px;
+        text-decoration: none;
+        color: #fff;
+        background-color: #419FD9;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 20px;
+    }
+
+    a.telegram-link svg {
+        vertical-align: middle;
+        margin-right: -50px;
+    }
+
+    .underline-text {
+        font-size: 20px;
+        text-decoration: underline;
+        text-align: center;
+        color: blue;
+    }
+</style>
+
+{% for i in qrcodes %}
+    <br><br>
+    <h1>{{ i.title }}</h1>
+    <img class="centered-image" src="{{ i.image.url }}" alt="Book Cover">
+    <a class="telegram-link" href="{{ i.url }}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 48 48" id="telegram">
+        </svg>
+        Telegram
+    </a>
+    <h2 class="underline-text">{{ i.info }}</h2>
+{% endfor %}
+{% endblock %}
+
+

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    h2 {
+        color: #333;
+    }
+
+    form {
+        margin: 20px 0;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    input[type="submit"] {
+        background-color: #007BFF;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    a {
+        color: #007BFF;
+    }
+
+    a:hover {
+        color: #0056b3;
+    }
+</style>
+{% if user.is_superuser or complaint.user == user %}
+    <h2>Shikoyatga javob yozish</h2>
+    <form method="post" action="{% url 'respond_to_complaint' complaint.pk %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="response">Javobingizni kiriting:</label>
+            <textarea class="form-control" id="response" name="response" rows="4" cols="50"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Javob yozish</button>
+    </form>
+{% endif %}
+{% endblock %}

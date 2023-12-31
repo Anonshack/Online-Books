@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<title>Book</title>
+  <div class="container">
+    <br><br>
+    <a href="{% url 'home' %}"><h2 class="text-center" style="color: green">Book Details</h2></a>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Image</th>
+          <th>Title</th>
+          <th>Info</th>
+          <th>Year</th>
+          <th>Price</th>
+          <th>After</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in task %}
+          <tr>
+            <td>{{ i.id }}</td>
+            <td><img src="{{ i.image.url }}" alt="Book Cover" height="257"></td>
+            <td>{{ i.title }}</td>
+            <td>{{ i.info }}</td>
+            <td>{{ i.year }}</td>
+            <td>{{ i.price }}</td>
+            <td>{{ i.after }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+        {% for i in task %}
+          {% if user.is_superuser %}
+            <a href="{% url 'edit_book' i.pk %}" style="color: blue; font-size: 19px;">Update Post</a> ||
+            <a href="{% url 'book_delete' i.pk %}" style="color: blue; font-size: 19px;">Delete Post</a><br>
+          {% endif %}  
+            <a href="{% url 'download_file' i.pk %}" download> Download this file</a>
+        {% endfor %}
+  </div>
+{% endblock %}

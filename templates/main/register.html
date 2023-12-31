@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="POST" class="signup-form">
+        {% csrf_token %}
+        <a href="{% url 'home' %}"><h2 class="signup-heading">Sign Up</h2></a>
+        <table class="signup-table">
+            {% for field in form %}
+                <tr>
+                    <td class="form-label">{{ field.label_tag }}</td>
+                    <td class="form-field {{ field.name }}-field">
+                        {{ field }}
+                    </td>
+                    <td class="form-errors">
+                        {% if field.errors %}
+                        <ul class="errorlist">
+                            {% for error in field.errors %}
+                                <li class="error-message">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3" class="form-button">
+                    <input type="submit" value="Register" class="btn-register" />
+                </td>
+                
+            </tr>
+        </table>
+        <div class="small">
+            <a href="{% url 'login' %}" style="color: blue; font-size:15px">Have an account? Go to Sign in</a>
+        </div>
+    </form>
+    
+<style>
+.signup-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 100px;
+    background-color: #f0f0f0;
+    border-radius: 110px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.signup-heading {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: green;
+}
+
+.signup-table {
+    width: 10%;
+}
+
+.form-label {
+    padding: 5px;
+    font-weight: bold;
+}
+
+.form-field {
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.form-field:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.error-message {
+    color: red;
+}
+
+.form-button {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.btn-register {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+</style>
+{% endblock content%}

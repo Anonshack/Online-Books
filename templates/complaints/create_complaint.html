@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    h2 {
+        color: #333;
+    }
+
+    form {
+        margin: 20px 0;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    input[type="submit"] {
+        background-color: #007BFF;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    a {
+        color: #007BFF;
+    }
+
+    a:hover {
+        color: #0056b3;
+    }
+</style>
+
+<h2>Yangi Shikoyat Yuborish</h2>
+<form method="post">
+    {% csrf_token %}
+    <textarea name="text" rows="4" cols="50" required></textarea><br>
+    <input type="submit" value="Yuborish">
+</form>
+<br>
+{% if user.is_superuser %}
+<a href="{% url 'complaints_list' %}">Shikoyatlar ro'yxati</a>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    User's Todo List
+{% endblock %}
+
+{% block content %}
+    <h1><a href="{% url 'users' %}">User's Todo List</a></h1>
+<a href="{% url 'new_post' %}">Add post</a> ||
+<a href="{% url 'users' %}">Users</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                <th scope="col">Description</th>
+                <th scope="col">User</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for todo in data %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ todo.title }}</td>
+                    <td>{{ todo.start_time|date:"d.m.y" }}<br>{{ todo.start_time|time:"H:i" }}</td>
+                    <td>{{ todo.end_time|date:"d.m.y" }}<br>{{ todo.end_time|time:"H:i" }}</td>
+                    <td>{{ todo.description }}</td>
+                    <td>{{ todo.user }}</td>
+                    <td><a href="{% url 'post_delete' pk=todo.pk %}">Postni o'chirish</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

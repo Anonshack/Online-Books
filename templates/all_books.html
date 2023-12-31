@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<title>All books</title>
+  <div class="container">
+    <br><br>
+    <h2 class="text-center"><a href="{% url 'home' %}">All Books</a></h2>
+    <div class="row">
+      {% for i in temp %}
+        <div class="col-md-4">
+          <div class="card mb-4">
+            {% if user.is_authenticated %}
+              <a href="{% url 'book_detail' i.pk %}"><img src="{{ i.image.url }}" height="400" class="card-img-top" alt="{{ i.title }}"></a>
+              <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'book_detail' i.id %}">Title: {{ i.title }}, Year: {{ i.year }} After: {{ i.after }}</a></h5>
+              </div>
+            {% else %}
+              <a href="{% url 'login' %}"><img src="{{ i.image.url }}" height="400" class="card-img-top" alt="{{ i.title }}"></a>
+              <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'login' %}">{{ i.title }}</a></h5>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

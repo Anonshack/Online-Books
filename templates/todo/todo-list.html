@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+</head>
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+h1 {
+    color: #007bff;
+}
+
+.todo-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item h2 {
+    color: #333;
+}
+
+.todo-item p {
+    color: #555;
+    margin: 8px 0;
+}
+
+.todo-item strong {
+    color: #333;
+}
+
+.todo-item .status {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.todo-item .author {
+    color: #007bff;
+}
+</style>
+<body>
+    <a href="{% url 'home' %}"><h1>Todo List</h1></a>
+
+    {% for todo in todos %}
+        <div class="todo-item">
+            <a href="{% url 'this-user' todo.user.pk %}"><h2 style="color: green;">{{ todo.title }}</h2></a>
+            <p><strong>Start Time:</strong> {{ todo.start_time }}</p>
+            <p><strong>End Time:</strong> {{ todo.end_time }}</p>
+            <p><strong>Status:</strong> {{ todo.get_status_display }}</p>
+            <p><strong>Author:</strong> {{ todo.user.username }}</p>
+        </div>
+    {% endfor %}
+</body>
+</html>
+{% endblock %}
